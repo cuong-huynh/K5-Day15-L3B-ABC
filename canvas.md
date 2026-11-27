@@ -12,5 +12,5 @@
 | 4 | Bằng chứng đầu — CP1: giả thuyết + nguồn sẽ kiểm · CP2: số đầu tiên + 1 trích dẫn | Giả thuyết: ≥1/2 học viên L3B từng không chắc hạn/lịch vì thông báo Discord rải rác. Sẽ kiểm bằng: phỏng vấn ≥3 bạn ngoài nhóm + quan sát/đếm câu hỏi lặp trên kênh công khai Discord |
 | 5 | **Lát cắt MỘT CÂU** (1 người dùng · 1 việc · 1 quyết định AI · 1 kết quả) | Một học viên L3B · hỏi "hạn nộp lab X là khi nào" · hệ thống chỉ trả lời khi tìm được trong thông báo chính thức kèm link, không có thì chuyển TA · học viên không nhận hạn sai |
 | 6 | AI tự làm đến đâu + 1 dòng lý do: sai thì ai chịu gì | Chỉ đề xuất câu trả lời + nguồn hoặc đề xuất chuyển TA; không tự gửi tin Discord. Sai hạn → học viên nộp muộn; vì vậy không chắc thì phải chuyển người |
-| 7 | Phân công có tên | Cường: điều phối + canvas/spec + nộp CP · Đức: bằng chứng pain (phỏng vấn/khảo sát) · Duy: bản chạy thử/code · Tùng: bộ câu thử + metric + data card |
+| 7 | Phân công có tên | Chi tiết CP2: xem `CP2-chia-viec.md`. Cặp X Cường+Duy (spec + codebase) · Cặp Y Đức+Tùng (evidence + benchmark/metric/DATA_CARD) |
 | — | *(CP2)* Đã đổi gì so với CP1 | |
