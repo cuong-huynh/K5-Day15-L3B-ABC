@@ -23,7 +23,10 @@ SYSTEM = (
 )
 
 INJECTION = re.compile(r"bỏ qua .*(hướng dẫn|chỉ dẫn)|ignore .*(instruction|previous)|system prompt|đóng vai", re.I)
-OUT_OF_SCOPE = re.compile(r"điểm danh|điểm số|\bđiểm\b|xếp hạng|bảng điểm|\bgpa\b", re.I)
+OUT_OF_SCOPE = re.compile(
+    r"điểm\s*danh|diem\s*danh|điểm\s*số|diem\s*so|\bđiểm\b|\bdiem\b|xếp hạng|bang diem|bảng điểm|\bgpa\b",
+    re.I,
+)
 
 
 def _handoff(text: str, reason: str) -> dict:
