@@ -1,18 +1,45 @@
-"""Công cụ của bài toán — NHÓM VIẾT. Điền ở guide bước 2.2 (thiết kế) và 3.2 (code).
+"""Công cụ của bài toán A2 (Trợ lý Discord: hạn nộp / lịch từ thông báo chính thức).
 
-Mỗi công cụ là một hàm Python có @tool. Docstring ghi đúng 4 ý như sơ đồ ở spec.md §4:
-    tên · input · output · có tác động ra ngoài không (gửi tin, sửa dữ liệu, chấm điểm…)
-Khung tự ghi mỗi lần gọi công cụ vào trace (tên, input, output rút gọn, thời gian, lỗi).
-
-Số công cụ, kiểu công cụ do thiết kế của nhóm quyết định — có bài chỉ cần một công cụ tra cứu.
-Công cụ có tác động ra ngoài: KHÔNG tự làm. Trả về bản nháp chờ người duyệt (guide bước 2.2, "chỗ người duyệt").
-Dữ liệu công cụ đọc (bài mẫu, thông báo mẫu, lịch…): để trong data/ và mô tả ở data/DATA_CARD.md.
+Mỗi công cụ là một hàm có @tool; docstring ghi: tên · input · output · tác động ra ngoài.
+Dữ liệu: data/announcements.json — DỮ LIỆU GIẢ (synthetic), xem data/DATA_CARD.md.
 """
-from tracing import tool, TOOLS  # noqa: F401  (TOOLS: danh sách công cụ đã đăng ký, dùng khi viết vòng lặp agent)
+import json
+import os
+import re
+
+from tracing import tool, TOOLS  # noqa: F401
+
+DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "announcements.json")
+
+
+def _load() -> list:
+    with open(DATA_PATH, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def extract_lab(text: str):
+    """Hàm thuần (không phải công cụ): lấy mã lab từ câu hỏi, vd "hạn nộp lab 3" -> "3". Không thấy -> None."""
+    m = re.search(r"\blab\s*[-#]?\s*(\d+|[a-z])\b", text.lower())
+    return m.group(1) if m else None
 
 
 @tool
-def search_example(query: str) -> list:
-    """(ví dụ — thay bằng công cụ của nhóm) Tra dữ liệu mẫu theo câu hỏi.
-    Input: câu hỏi (str). Output: danh sách đoạn {"code", "text"}. Không tác động ra ngoài."""
-    return [{"code": "VD-1", "text": "(ví dụ) đoạn dữ liệu giả — thay bằng dữ liệu thật của bài toán"}]
+def search_announcements(lab: str) -> list:
+    """search_announcements — tra thông báo CHÍNH THỨC về hạn nộp của một lab.
+    Input: lab (str, vd "3"). Output: danh sách thông báo {id, lab, date, deadline, url, title, text}
+    chỉ gồm tin official, đúng lớp L3B và chưa bị thông báo khác thay thế (supersedes); mới nhất trước.
+    Không tác động ra ngoài (chỉ đọc)."""
+    items = [a for a in _load() if a["official"] and a["class"] == "L3B" and a["lab"] == str(lab).lower()]
+    replaced = {a["supersedes"] for a in items if a.get("supersedes")}
+    items = [a for a in items if a["id"] not in replaced]
+    return sorted(items, key=lambda a: a["date"], reverse=True)
+
+
+@tool
+def escalate(question: str, reason: str) -> dict:
+    """escalate — soạn BẢN NHÁP chuyển câu hỏi cho TA.
+    Input: question (str, câu hỏi gốc), reason (str, vì sao không tự trả lời).
+    Output: {"status": "draft_pending_review", "to": "TA", "message": str}.
+    KHÔNG tự gửi tin Discord: chỉ tạo bản nháp, TA / người duyệt gửi."""
+    return {"status": "draft_pending_review", "to": "TA",
+            "message": "Học viên hỏi: \"%s\" — lý do chuyển: %s" % (question.strip()[:200], reason)}
