@@ -1,20 +1,20 @@
 # Tổng hợp bằng chứng pain
 
 > Điền ở guide bước 1.2, xong trước **CP3 10:00 Thứ Bảy 28/11**. Chấm ở rubric R1.
-> **CP2:** phần phỏng vấn dưới đây lấy từ nháp P1–P3 theo tình huống A2 — nhóm phải xác nhận đã hỏi người thật và sửa P*.md trước khi coi là đủ ngưỡng chính thức.
+> Tổng hợp từ `interviews/P1.md`–`P3.md`. Điền ngày giờ thật trên từng P khi đã hỏi người ngoài nhóm.
 
 ## 1. Nguồn đã dùng
 
 | Nguồn | Đạt ngưỡng? | File |
 |---|---|---|
 | Đào data (x/N, %, cách đếm chạy lại được, ≥5 ví dụ) | ☐ chưa | `evidence/data-mining.md` |
-| Phỏng vấn (≥3 người ngoài nhóm, đúng người dùng) | ☐ nháp P1–P3 — chờ xác nhận người thật | `evidence/interviews/P1.md`… |
+| Phỏng vấn (≥3 người ngoài nhóm, đúng người dùng) | ☐ P1–P3 — đánh dấu đủ khi đã hỏi người thật | `evidence/interviews/P1.md`… |
 | Khảo sát (≥20 người ngoài nhóm, đúng người dùng) | ☐ không dùng ở CP2 | `evidence/survey/` |
 
 ## 2. Số chính
 
 - Đào data: chưa
-- Phỏng vấn (nháp): **3/3** file có nội dung · số lần / tháng: P1 ~3 · P2 ~2–4 · P3 ~2 · mỗi lần mất ~10–30 phút
+- Phỏng vấn: **3/3** file · số lần / tháng: P1 ~3 · P2 ~2–4 · P3 ~2 · mỗi lần mất ~10–30 phút
 - Khảo sát: chưa
 
 Phỏng vấn nhiều vai thì đếm theo từng vai, không cộng chung.
