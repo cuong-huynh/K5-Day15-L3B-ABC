@@ -22,19 +22,30 @@ Một học viên L3B · hỏi "hạn nộp lab X là khi nào" · hệ thống 
 
 ---
 
+## Branch theo người (xem `BRANCHES.md`)
+
+| Ai | Branch | File chính |
+|---|---|---|
+| **Cường** | `cuong` (+ merge `main`) | `spec.md` · `canvas.md` · form |
+| **Duy** | `duy` | `codebase/` · `data/announcements.json` |
+| **Đức** | `duc` | `evidence/interviews/` · `evidence/summary.md` |
+| **Tùng** | `CTT/QA` | `eval/` · `data/DATA_CARD.md` |
+
+Làm trên branch mình → PR vào `main`. Không đẩy thẳng `main` trừ hotfix checkpoint.
+
 ## Cặp X — Duy + Cường · bản chạy thử + spec
 
 | Ai | Việc | File / output |
 |---|---|---|
-| **Vũ Lương Duy** | Khung bản chạy thử A2 (AI giả): tìm thông báo → trả lời kèm nguồn / hỏi lại / chuyển TA | `codebase/tools.py` · `codebase/agent.py` · `python run.py` chạy hết luồng |
-| **Huỳnh Văn Cường** | Spec + sơ đồ + chuẩn đạt + canvas CP2 + nộp form | `spec.md` §3–§7 (có sơ đồ §4) · `canvas.md` · form CP2 |
+| **Vũ Lương Duy** | Khung bản chạy thử A2 (AI giả): tìm thông báo → trả lời kèm nguồn / hỏi lại / chuyển TA | `codebase/tools.py` · `codebase/agent.py` · `python run.py` chạy hết luồng · branch `duy` |
+| **Huỳnh Văn Cường** | Spec + sơ đồ + chuẩn đạt + canvas CP2 + nộp form | `spec.md` §3–§7 (có sơ đồ §4) · `canvas.md` · form CP2 · branch `cuong` / `main` |
 
 ## Cặp Y — Đức + Tùng · bằng chứng + bộ câu thử
 
 | Ai | Việc | File / output |
 |---|---|---|
-| **Nguyễn Phan Tuấn Đức** | Phỏng vấn / ghi chép bằng chứng pain | `evidence/interviews/P1.md`… · cập nhật dòng 4 `canvas.md` (số đầu + 1 trích dẫn nếu có) |
-| **Cao Thanh Tùng** | Bộ câu thử + metric + data card | `eval/benchmark.csv` ≥10 câu · `eval/metric_spec.yaml` ≥3 metric · `data/DATA_CARD.md` |
+| **Nguyễn Phan Tuấn Đức** | Phỏng vấn / ghi chép bằng chứng pain | `evidence/interviews/P1.md`… · branch `duc` |
+| **Cao Thanh Tùng** | Bộ câu thử + metric + data card | `eval/benchmark.csv` · `eval/metric_spec.yaml` · `data/DATA_CARD.md` · branch `CTT/QA` |
 
 **Đổi chéo 19:00:** X đọc bộ câu thử của Y · Y chạy thử `python run.py` của X.
 
