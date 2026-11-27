@@ -6,15 +6,15 @@
 
 - Tên nhóm: ABC
 - Lớp: L3B
-- Track: ____
+- Track: A
 - Link repo: https://github.com/cuong-huynh/K5-Day15-L3B-ABC
 
 | STT | Họ và tên | Mã học viên | Vai trò | Phần việc chính |
 |---|---|---|---|---|
-| 1 | Huỳnh Văn Cường | 2A202603866 | Đội trưởng | ____ |
-| 2 | Nguyễn Phan Tuấn Đức | 2A202603818 | Thành viên | ____ |
-| 3 | Vũ Lương Duy | 2A202603945 | Thành viên | ____ |
-| 4 | Cao Thanh Tùng | 2A202603982 | Thành viên | ____ |
+| 1 | Huỳnh Văn Cường | 2A202603866 | Đội trưởng | Điều phối · canvas/spec · nộp CP |
+| 2 | Nguyễn Phan Tuấn Đức | 2A202603818 | Thành viên | Bằng chứng pain · phỏng vấn/khảo sát |
+| 3 | Vũ Lương Duy | 2A202603945 | Thành viên | Bản chạy thử · codebase |
+| 4 | Cao Thanh Tùng | 2A202603982 | Thành viên | Bộ câu thử · metric · data card |
 
 **Quy tắc điền**
 - **Lớp:** `L3A` hoặc `L3B`. **Track:** một chữ `A` (EdTech), `B` (Y tế), `C` (Du lịch), `D` (Thương mại điện tử), `E` (Tài chính) hoặc `F` (Làn khác). **Link repo:** link GitHub công khai của nhóm.
