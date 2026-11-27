@@ -20,7 +20,10 @@ def _load() -> list:
 def extract_lab(text: str):
     """Hàm thuần (không phải công cụ): lấy mã lab từ câu hỏi, vd "hạn nộp lab 3" -> "3". Không thấy -> None."""
     m = re.search(r"\blab\s*[-#]?\s*(\d+|[a-z])\b", text.lower())
-    return m.group(1) if m else None
+    if not m:
+        return None
+    lab = m.group(1)
+    return str(int(lab)) if lab.isdigit() else lab   # "03" -> "3"
 
 
 @tool
