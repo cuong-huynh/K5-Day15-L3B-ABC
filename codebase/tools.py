@@ -17,10 +17,28 @@ def _load() -> list:
         return json.load(f)
 
 
+NUMBER_WORDS = {"một": "1", "hai": "2", "ba": "3", "bốn": "4", "tư": "4", "năm": "5", "sáu": "6", "bảy": "7",
+                "tám": "8", "chín": "9", "mười": "10", "one": "1", "two": "2", "three": "3", "four": "4",
+                "five": "5", "six": "6", "seven": "7", "eight": "8", "nine": "9", "ten": "10"}
+_LAB_RE = re.compile(r"\blab\s*[-#]?\s*(\d+|%s|[a-z])\b" % "|".join(sorted(NUMBER_WORDS, key=len, reverse=True)))
+
+
+def extract_labs(text: str) -> list:
+    """Hàm thuần (không phải công cụ): mọi mã lab khác nhau trong câu hỏi, theo thứ tự xuất hiện.
+    "lab 03" -> "3"; "lab ba" / "lab SIX" -> "3" / "6"."""
+    labs = []
+    for m in _LAB_RE.finditer(text.lower()):
+        g = m.group(1)
+        lab = NUMBER_WORDS.get(g) or (str(int(g)) if g.isdigit() else g)
+        if lab not in labs:
+            labs.append(lab)
+    return labs
+
+
 def extract_lab(text: str):
-    """Hàm thuần (không phải công cụ): lấy mã lab từ câu hỏi, vd "hạn nộp lab 3" -> "3". Không thấy -> None."""
-    m = re.search(r"\blab\s*[-#]?\s*(\d+|[a-z])\b", text.lower())
-    return m.group(1) if m else None
+    """Hàm thuần: mã lab đầu tiên trong câu hỏi, vd "hạn nộp lab 3" -> "3". Không thấy -> None."""
+    labs = extract_labs(text)
+    return labs[0] if labs else None
 
 
 @tool
