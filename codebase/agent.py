@@ -45,6 +45,28 @@ OUT_OF_SCOPE = re.compile(
 )
 
 
+# Lý do chuyển TA chuyên biệt (chỉ đổi lời nhắn cho TA, không đổi quyết định chuyển hay trả lời).
+_REASONS = [
+    (re.compile(r"\blms\b|phoenix|lỗi|báo lỗi|thất bại|refresh|không hiện|không vào được|không mở được|không upload|hệ thống", re.I),
+     "lỗi hoặc cách dùng hệ thống nộp bài (LMS / Phoenix), TA kiểm tra, bot không đoán nguyên nhân"),
+    (re.compile(r"nộp nhầm|nộp sai|sai link|nộp lại|nộp bù|nộp nhầm", re.I),
+     "nộp nhầm hoặc nộp lại bài cá nhân, TA xác nhận, bot không tự quyết định"),
+    (re.compile(r"\bgate\b|ai log|\blog\b|cách tính hạn|quy định|quy chế|múi giờ", re.I),
+     "quy định hoặc yêu cầu bài nộp (Gate / AI log / cách tính hạn), chưa có thông báo chính thức trong dữ liệu"),
+    (re.compile(r"gia hạn|dời hạn|lùi hạn|xin thêm thời gian", re.I),
+     "xin gia hạn hoặc dời hạn, chỉ TA quyết định"),
+    (re.compile(r"điểm|diem|xếp hạng|gpa", re.I),
+     "hỏi điểm hoặc điểm danh, chỉ TA xử lý"),
+]
+
+
+def out_of_scope_reason(text: str) -> str:
+    for rx, why in _REASONS:
+        if rx.search(text):
+            return "ngoài phạm vi hạn nộp lab: " + why
+    return "ngoài phạm vi hạn nộp lab: việc khác, chỉ TA xử lý"
+
+
 def _handoff(text: str, reason: str) -> dict:
     d = escalate(text, reason)
     note("chuyển TA: " + reason)
@@ -78,7 +100,7 @@ def answer(text: str) -> dict:
     if INJECTION.search(text) or (cls and cls["intent"] == "chen_lenh"):
         return _handoff(text, "câu hỏi chứa chỉ dẫn điều khiển bot")
     if OUT_OF_SCOPE.search(text) or (cls and cls["intent"] == "ngoai_pham_vi"):
-        return _handoff(text, "ngoài phạm vi: điểm / điểm danh / việc khác hạn lab, chỉ TA xử lý")
+        return _handoff(text, out_of_scope_reason(text))
     if cls and cls["intent"] == "khac":
         return _handoff(text, "không xác định được ý định hỏi hạn lab")
 
