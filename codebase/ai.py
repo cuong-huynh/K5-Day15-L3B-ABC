@@ -55,6 +55,7 @@ URLS = {
     "fpt": "https://token-api.fpt.ai/v1/chat/completions",   # FPT AI Factory serverless
     "openai": "https://api.openai.com/v1/chat/completions",
     "deepseek": "https://api.deepseek.com/chat/completions",
+    "gemini": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
 }
 
 

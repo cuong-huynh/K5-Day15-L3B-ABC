@@ -4,12 +4,6 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 
 type Msg = { role: "user" | "bot"; text: string };
 
-const EXAMPLES = [
-  "hạn nộp lab 3 là khi nào?",
-  "lab 4 hạn bao giờ",
-  "cho em điểm lab 3 của em",
-];
-
 export default function Home() {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
@@ -53,65 +47,69 @@ export default function Home() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-2xl flex-col px-4 py-6 sm:py-10">
-      <header className="mb-6 border-b border-[var(--line)] pb-4">
-        <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">ABC</p>
-        <h1 className="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">
-          Hỏi hạn lab
+    <main className="mx-auto flex h-screen w-full max-w-4xl flex-col px-5 py-8 sm:py-10">
+      <header className="mb-6 text-center">
+        <h1 className="bg-gradient-to-r from-[#7ee0bd] via-[#e8f0ec] to-[#7ee0bd] bg-clip-text text-4xl font-extrabold tracking-wide text-transparent sm:text-5xl">
+          Nhóm ABC · Lớp L3B · Track A2
         </h1>
-        <p className="mt-2 text-sm text-[var(--muted)]">
-          Chỉ trả lời từ thông báo chính thức. Không chắc thì chuyển TA.
+        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+          Trợ lý Discord hỗ trợ sinh viên tra cứu hạn nộp lab nhanh chóng và chính xác từ thông báo chính thức.
         </p>
       </header>
 
-      <section className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pb-4">
+      <section className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto rounded-3xl border border-[var(--line)] bg-[#101a16]/70 p-5 shadow-2xl shadow-black/30 backdrop-blur sm:p-7">
+        {msgs.length === 0 && !busy ? (
+          <div className="m-auto text-center text-base text-[var(--muted)]">
+            Nhập câu hỏi về hạn nộp lab ở ô bên dưới để bắt đầu.
+          </div>
+        ) : null}
         {msgs.map((m, i) => (
-          <div
-            key={i}
-            className={`max-w-[92%] whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-              m.role === "user"
-                ? "ml-auto bg-[var(--accent-dim)] text-white"
-                : "mr-auto border border-[var(--line)] bg-[var(--bg1)]"
-            }`}
-          >
-            {m.text}
+          <div key={i} className={`flex items-end gap-3 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+            {m.role === "bot" ? (
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--accent)] text-xs font-bold text-[#04140f]">
+                AI
+              </div>
+            ) : null}
+            <div
+              className={`max-w-[80%] whitespace-pre-wrap break-words rounded-2xl px-5 py-3.5 text-base leading-relaxed ${
+                m.role === "user"
+                  ? "rounded-br-sm bg-[var(--accent-dim)] text-white"
+                  : "rounded-bl-sm border border-[var(--line)] bg-[var(--bg1)]"
+              }`}
+            >
+              {m.text}
+            </div>
           </div>
         ))}
         {busy ? (
-          <div className="mr-auto text-sm text-[var(--muted)]">Đang hỏi…</div>
+          <div className="flex items-end gap-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--accent)] text-xs font-bold text-[#04140f]">
+              AI
+            </div>
+            <div className="rounded-2xl rounded-bl-sm border border-[var(--line)] bg-[var(--bg1)] px-5 py-3.5 text-base text-[var(--muted)]">
+              Đang trả lời…
+            </div>
+          </div>
         ) : null}
         <div ref={bottom} />
       </section>
 
-      <div className="mb-3 flex flex-wrap gap-2">
-        {EXAMPLES.map((ex) => (
-          <button
-            key={ex}
-            type="button"
-            disabled={busy}
-            onClick={() => void send(ex)}
-            className="rounded-full border border-[var(--line)] bg-transparent px-3 py-1 text-xs text-[var(--muted)] transition hover:border-[var(--accent)] hover:text-[var(--text)] disabled:opacity-50"
-          >
-            {ex}
-          </button>
-        ))}
-      </div>
-
       <form
         onSubmit={onSubmit}
-        className="flex gap-2 rounded-2xl border border-[var(--line)] bg-[var(--bg1)] p-2"
+        className="mt-5 flex gap-3 rounded-2xl border border-[var(--line)] bg-[var(--bg1)] p-3 shadow-lg shadow-black/20 focus-within:border-[var(--accent)]"
       >
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="vd: hạn nộp lab 3 là khi nào?"
+          placeholder="Nhập câu hỏi…"
           disabled={busy}
-          className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm outline-none placeholder:text-[var(--muted)]"
+          autoFocus
+          className="min-w-0 flex-1 bg-transparent px-3 py-2 text-base outline-none placeholder:text-[var(--muted)]"
         />
         <button
           type="submit"
           disabled={busy || !input.trim()}
-          className="rounded-xl bg-[var(--accent)] px-4 py-2 text-sm font-medium text-[#04140f] disabled:opacity-40"
+          className="rounded-xl bg-[var(--accent)] px-6 py-2.5 text-base font-semibold text-[#04140f] transition hover:brightness-110 disabled:opacity-40"
         >
           Gửi
         </button>

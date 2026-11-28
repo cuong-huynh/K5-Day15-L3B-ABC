@@ -1,40 +1,50 @@
-# Mô phỏng chi phí khi dùng thật — guide 4.2 · CP4
-sessions: 50
-seed: 42
+# Mô phỏng chi phí khi dùng thật — Nhóm ABC · Track A2 (Trợ lý Discord hỏi hạn lab)
+# Chạy thử: python3 run.py simulate --try
+# Chạy nộp: python3 run.py simulate
 
-users:
+sessions: 50        # số phiên mô phỏng — bản nộp ≥50
+seed: 42            # giữ cố định để chạy lại ra cùng chuỗi phiên
+
+users:              # quy mô người dùng thật — 3 kịch bản cho lớp L3 (Track A)
   low: 300
   base: 700
   high: 1000
-  source: "Track A — cơ sở: lớp L3 hơn 700 học viên (README hackathon brief); thấp 300 / cao 1000 (tự ước tính biên lớp)"
+  source: "Track A — Cơ sở: lớp L3 hơn 700 học viên (README hackathon AI20K); thấp (300) và cao (1000): (tự ước tính)"
 
-personas:
+personas:           # 3 kiểu người dùng từ phỏng vấn P1–P3 (evidence/summary.md); share cộng lại = 1.0
   - name: dung_it
     share: 0.4
     uses_per_month: 2
     turns_per_session: 1
-    source: "Phỏng vấn P3 (~2 lần/tháng quanh hạn) — evidence/interviews/P3.md"
+    types: [thuong, kho]
+    source: "Phỏng vấn P3 (~2 lần/tháng, evidence/interviews/P3.md); share 0.4 và 1 lượt/phiên: (tự ước tính)"
   - name: dung_vua
     share: 0.4
     uses_per_month: 3
     turns_per_session: 2
-    source: "Phỏng vấn P1 (~3 lần/tháng) — evidence/interviews/P1.md"
+    types: [thuong, kho]
+    source: "Phỏng vấn P1 (~3 lần/tháng, evidence/interviews/P1.md); share 0.4 và 2 lượt/phiên (hỏi lại khi thiếu mã lab/kiểm nguồn): (tự ước tính)"
   - name: dung_nhieu
     share: 0.2
     uses_per_month: 4
     turns_per_session: 3
-    source: "Phỏng vấn P2 (~2–4 lần/tháng, hỏi group rồi announcements) — evidence/interviews/P2.md"
+    types: [thuong, kho, tu_choi]
+    source: "Phỏng vấn P2 (~2–4 lần/tháng, lấy cận trên 4, evidence/interviews/P2.md); share 0.2 và 3 lượt/phiên (gồm câu ngoài phạm vi): (tự ước tính)"
 
-prices:
-  - model: deepseek-flash
+prices:             # USD / 1 triệu token — ≥2 mức model (rẻ đang chạy thật và mạnh hơn)
+  - model: openai/gpt-oss-20b
+    input: 0.075
+    output: 0.30
+    source: "https://groq.com/pricing · xem 28/11/2026 (model chạy thật ở eval/run-1.csv)"
+  - model: openai/gpt-oss-120b
     input: 0.15
     output: 0.60
-    source: "https://api-docs.deepseek.com/quick_start/pricing · ngoài cao điểm · đối chiếu brief further-reading/model-prices.md (25/11/2026); đo token trên DeepSeek-V4.1-Flash (FPT)"
-  - model: gemini-3.1-flash-lite
-    input: 0.25
-    output: 1.50
-    source: "https://ai.google.dev/gemini-api/docs/pricing · brief model-prices.md 25/11/2026 — mức mạnh hơn để so sánh"
+    source: "https://groq.com/pricing · xem 28/11/2026 (model mạnh hơn cùng nhà cung cấp Groq)"
+  - model: gemini-3.5-flash
+    input: 1.50
+    output: 9.00
+    source: "https://ai.google.dev/gemini-api/docs/pricing · xem 28/11/2026 (model mạnh, dùng đo token mô phỏng)"
 
 usd_to_vnd:
-  rate: 25000
-  source: "(tự ước tính) quy đổi minh họa ~25.000 VND/USD"
+  rate: 26030
+  source: "Vietcombank tỷ giá bán ra USD/VND · xem 28/11/2026"
