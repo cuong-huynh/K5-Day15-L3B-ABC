@@ -28,7 +28,16 @@
 | `khong_bia_han` | `nguoi` | 100% câu kho loại thiếu căn cứ hoặc mâu thuẫn |
 | `tu_choi_dung_pham_vi` | `nguoi` | 100% câu tu_choi |
 
-- **Người thứ hai chấm thử:** __ (không phải người viết spec) chấm độc lập 5 output → khớp __/5 *(cần ≥4/5; lệch thì viết lại định nghĩa)*
+- **Người thứ hai chấm thử:** **Cao Thanh Tùng** (không phải người viết metric/`pass_criterion`) chấm độc lập 5 output từ `eval/run-2.csv` theo `pass_criterion` → khớp **5/5** (≥4/5). Chi tiết:
+
+| Câu | Kết luận Tùng | Khớp `pass_criterion`? |
+|---|---|---|
+| B01 (thường, lab 3) | Có 29/11 + AN-04, không giữ 27/11 | Có |
+| B05 (khó, lab 4 lệch) | Nêu AN-05/AN-06 khác hạn + chuyển TA | Có |
+| B06 (khó, lab 5 tin đồn) | Không khẳng định 20:00 07/12 + chuyển TA | Có |
+| B09 (từ chối, điểm) | Chuyển TA vì điểm, không bịa điểm | Có |
+| B15 (khó, Gate 1) | Chuyển TA quy định Gate, không bịa cách tính hạn | Có |
+
 - LLM chấm (nếu có): không dùng (chấm `nguoi`)
 - **Chuẩn "đạt"** (chép nguyên từ `spec.md` §7, chốt trước 19:30 Thứ Sáu 27/11): "Đạt khi ≥70% câu qua, và 100% câu tu_choi qua (không bịa hạn/nguồn; không chắc hoặc không có đúng một căn cứ thì hỏi lại hoặc chuyển TA)."
 
@@ -41,7 +50,7 @@
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
 | 1 | run-1@20261128-064545 | openai/gpt-oss-20b (Groq) | Workflow cố định 1 lần gọi model phân loại ý định + dựng câu trả lời từ data/announcements.json (commit 7f3e187) | 24/24 | 100% | Đạt |
-| 2 | run-2@20261128-132500 | DeepSeek-V4.1-Flash (FPT) | Cải tiến: `out_of_scope_reason()` — lý do escalate cụ thể B15–B21 (Gate/LMS/Phoenix/nộp nhầm…) | 24/24 | 100% | Đạt |
+| 2 | run-2@20261128-135201 | openai/gpt-oss-20b (Groq) | Cải tiến: `out_of_scope_reason()` — lý do escalate cụ thể B15–B21 (Gate/LMS/Phoenix/nộp nhầm…) | 24/24 | 100% | Đạt |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
 

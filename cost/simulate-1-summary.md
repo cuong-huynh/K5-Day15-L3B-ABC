@@ -8,9 +8,9 @@ Do `python run.py simulate` sinh ra — không sửa tay. Chép bảng sang `cos
 | dung_vua | 4 | 2 | 557 | 35 | 2.0 | 2.0 |
 | dung_nhieu | 0 | 3 | — | — | — | — |
 
-Tỉ lệ đạt dùng để tính: 24/24 (100%) — lượt run-1@20261128-064545
+Tỉ lệ đạt dùng để tính: 24/24 (100%) — lượt run-2@20261128-135201 (cập nhật CP4: dùng % lượt 2; token vẫn từ simulate-1)
 
-- Tỉ lệ đạt lấy từ lượt nhóm chọn: eval/run-1.csv (--rate-from). ⚠️ Lượt này chạy bằng openai/gpt-oss-20b, mô phỏng đo trên gemini-3.5-flash — khác model.
+- Tỉ lệ đạt lấy từ lượt nhóm chọn: eval/run-2.csv. ⚠️ Mô phỏng đo token trên gemini-3.5-flash; eval lượt 2 model khác — ghi rõ trong cost/cost-estimate.md.
 
 | Model (giá) | Chi phí / phiên | Chi phí / task thành công | Chi phí / câu hỏi đạt | Chi phí / tháng — thấp (300 người) | Chi phí / tháng — cơ sở (700 người) | Chi phí / tháng — cao (1.000 người) | Chi phí / người / tháng (cơ sở) |
 |---|---:|---:|---:|---:|---:|---:|---:|

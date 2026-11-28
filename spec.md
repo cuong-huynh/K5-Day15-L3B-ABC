@@ -101,13 +101,13 @@ flowchart LR
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
 - Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — 24 câu (thuong 4 · kho 14 · tu_choi 6) · metric: `eval/metric_spec.yaml` (3 metric)
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): "Đạt khi ≥70% câu qua, và 100% câu tu_choi qua (không bịa hạn/nguồn; không chắc hoặc không có đúng một căn cứ thì hỏi lại hoặc chuyển TA)."
-- Kết quả: lượt 1 **24/24 (100%)** · lượt 2 **24/24 (100%)** — run ID: `run-1@20261128-064545` / `run-2@20261128-132500` → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 **24/24 (100%)** · lượt 2 **24/24 (100%)** — run ID: `run-1@20261128-064545` / `run-2@20261128-135201` → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
 - Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-1.csv` (50 phiên, seed 42)
-- Chi phí / task thành công: **~$0.00030** (`deepseek-flash`) · **~$0.00066** (`gemini-3.1-flash-lite`) — đo token trên DeepSeek-V4.1-Flash
-- Chi phí / tháng ở quy mô thật (deepseek-flash): thấp **~$0.29** · cơ sở **~$0.68** · cao **~$0.97** → chi tiết `cost/cost-estimate.md`
-- So với impact / người / tháng (§2 ≈ 45 phút): đáng làm — chi phí API ~24₫/người/tháng (cơ sở) << thời gian tiết kiệm; kèm độ nhạy 90%/80% vì run-2 = 100%
+- Chi phí / task thành công (cơ sở): **~$0.000039** (`openai/gpt-oss-20b`) · **~$0.00085** (`gemini-3.5-flash`) — token đo trên `gemini-3.5-flash` (`simulate-1`); % đạt từ `run-2`
+- Chi phí / tháng (gpt-oss-20b): thấp **~$0.034** · cơ sở **~$0.080** · cao **~$0.114** → chi tiết `cost/cost-estimate.md`
+- So với impact / người / tháng (§2 ≈ 45 phút): đáng làm — API ~3₫/người/tháng (cơ sở, gpt-oss-20b) << thời gian tiết kiệm; kèm độ nhạy 90%/80% vì run-2 = 100%
 
 ## §9. Rủi ro & an toàn
 - Dữ liệu: chỉ thông báo synthetic / trích đã bỏ PII; không đưa sao kê hay dữ liệu cá nhân vào model
@@ -125,8 +125,9 @@ flowchart LR
 |---|---|---|
 | 2026-11-27 CP2 | Khởi tạo spec A2 + khóa chuẩn đạt | Nộp CP2 |
 | 2026-11-28 CP3 | Cập nhật §1–§2 từ P1–P3; §4 model Groq; §7 kết quả lượt 1 24/24; benchmark mở rộng 24 câu (chuẩn đạt giữ nguyên) | Evidence + `run-1@20261128-064545` |
-| 2026-11-28 CP4 | Cải tiến lý do escalate B15–B21 (`out_of_scope_reason`); lượt 2 24/24 `run-2@20261128-132500` (FPT DeepSeek-V4.1-Flash); chuẩn đạt giữ nguyên | Soft-fail report · `eval/run-2.csv` |
+| 2026-11-28 CP4 | Cải tiến lý do escalate B15–B21 (`out_of_scope_reason`); lượt 2 24/24 `run-2@20261128-135201` (Groq gpt-oss-20b); chuẩn đạt giữ nguyên | Soft-fail report · `eval/run-2.csv` |
 | 2026-11-28 CP4 | `simulate-1` 50 phiên → `cost/cost-estimate.md` + `spec` §8; `demo-slides.pdf` 8 trang; `CP4-form-draft.md` | Guide 4.2 + 5.1 · nộp form 14:30 |
+| 2026-11-28 ~15:15 | Chấm đủ cột `pass` run-2 · người 2 (Tùng) 5/5 · cập nhật cost gắn % run-2 · reflection `cuong`/`tung` · khớp số §7–§8 | Rubric R4–R6 · 23:59 |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 

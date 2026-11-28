@@ -17,8 +17,8 @@
   - `openai/gpt-oss-120b` (Groq): vào `$0.15` · ra `$0.60` — nguồn `https://groq.com/pricing` · xem 28/11/2026.
   - `gemini-3.5-flash` (Google): vào `$1.50` · ra `$9.00` — nguồn `https://ai.google.dev/gemini-api/docs/pricing` · xem 28/11/2026 (model đo token mô phỏng).
   - Tỷ giá quy đổi: `1 USD = 26.030 ₫` (Vietcombank tỷ giá bán ra · xem 28/11/2026).
-- **Tỉ lệ đạt** dùng để tính: `24/24 (100%)` — lượt `eval/run-1.csv` (`run-1@20261128-064545`, truyền qua `--rate-from eval/run-1.csv`; kèm bảng độ nhạy 90% và 80% ở mục 4).
-- Đo token trên model `gemini-3.5-flash`, tính giá cho `openai/gpt-oss-20b`, `openai/gpt-oss-120b` và `gemini-3.5-flash` *(lưu ý: lượt eval `run-1` chạy bằng `openai/gpt-oss-20b` khác model đo token, và khác bộ tách token giữa các hãng nên số token thực tế trên Groq có thể lệch nhẹ; xem `eval/run-1.csv`: trung bình ~295 token vào / ~115 token ra mỗi câu trên Groq so với ~278 token vào / ~16–18 token ra mỗi câu trên `gemini-3.5-flash`)*.
+- **Tỉ lệ đạt** dùng để tính: `24/24 (100%)` — lượt **`eval/run-2.csv`** (`run-2@20261128-135201`, `openai/gpt-oss-20b` · Groq). CP4 lấy **lượt 2** theo rubric R6. Kèm bảng độ nhạy 90% và 80% ở mục 4.
+- Đo token trên model `gemini-3.5-flash` (lượt `simulate-1`), tính giá cho `openai/gpt-oss-20b`, `openai/gpt-oss-120b` và `gemini-3.5-flash`. *(Lưu ý trung thực: eval lượt 2 cùng họ model giá `openai/gpt-oss-20b`; mô phỏng đo token trên Gemini vì 429/DNS — chỉ 8/50 phiên OK tính trung bình. Khác bộ tách token nên số token thật trên Groq có thể lệch nhẹ. Muốn đo token đúng model run-2 sẽ lưu `cost/simulate-2.csv`.)*
 
 ## 2. Kết quả mô phỏng
 
@@ -49,11 +49,11 @@ Lượt mô phỏng: `cost/simulate-1.csv` (`cost/simulate-1-summary.md`, `trace
 
 ## 4. Độ nhạy & chi phí ngoài model
 
-- **Độ nhạy theo tỉ lệ đạt** *(vì `eval/run-1.csv` đạt 100%, kiểm tra khi tỉ lệ đạt thực tế giảm xuống 90% và 80%)*:
+- **Độ nhạy theo tỉ lệ đạt** *(vì `eval/run-2.csv` đạt 100%, kiểm tra khi tỉ lệ đạt thực tế giảm xuống 90% và 80%)*:
 
 | Kịch bản tỉ lệ đạt | Chi phí / task thành công (`openai/gpt-oss-20b`) | Chi phí / task thành công (`openai/gpt-oss-120b`) | Chi phí / task thành công (`gemini-3.5-flash`) | Ghi chú |
 |---|---:|---:|---:|---|
-| Thực đo `run-1` (100%) | $0.000039 (≈ 1 ₫) | $0.000078 (≈ 2 ₫) | $0.00085 (≈ 22 ₫) | Lấy trực tiếp từ `cost/simulate-1-summary.md` |
+| Thực đo `run-2` (100%) | $0.000039 (≈ 1 ₫) | $0.000078 (≈ 2 ₫) | $0.00085 (≈ 22 ₫) | % từ run-2; token/phiên từ `cost/simulate-1-summary.md` |
 | Giả định 90% *(độ nhạy)* | $0.000043 (≈ 1 ₫) | $0.000086 (≈ 2 ₫) | $0.00095 (≈ 25 ₫) | `chi_phi_phien ÷ 0.90` — dự phòng câu ngoài phân bố |
 | Giả định 80% *(độ nhạy)* | $0.000049 (≈ 1 ₫) | $0.000097 (≈ 3 ₫) | $0.0011 (≈ 28 ₫) | `chi_phi_phien ÷ 0.80` — kịch bản bảo thủ sát chuẩn đạt (≥70%) |
 
