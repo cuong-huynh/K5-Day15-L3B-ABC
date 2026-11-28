@@ -8,7 +8,7 @@
 
 | Lượt | Run ID | Đạt / tổng | % | thuong | kho | tu_choi | So với chuẩn "đạt" |
 |---|---|---|---|---|---|---|---|
-| 1 | | __/__ | | __/__ | __/__ | __/__ | đạt / chưa |
+| 1 | run-1@20261128-064545 | 24/24 | 100% | 4/4 | 14/14 | 6/6 | đạt |
 | 2 | | __/__ | | __/__ | __/__ | __/__ | đạt / chưa |
 
 Kết quả từng câu: `eval/run-1.csv`, `eval/run-2.csv`. Trace: `traces/run-1.jsonl`, `traces/run-2.jsonl`.
@@ -17,17 +17,9 @@ Kết quả từng câu: `eval/run-1.csv`, `eval/run-2.csv`. Trace: `traces/run-
 
 | Nhóm lỗi | Số câu | Câu |
 |---|---|---|
-| vd: bịa nguồn *(ví dụ)* | | |
-| vd: đoán khi thiếu thông tin *(ví dụ)* | | |
-| | | |
+| *(lượt 1 không có câu trượt)* | 0 | — |
 
-**≥3 lỗi cụ thể:**
-
-| Câu | Input | Output | Vì sao sai |
-|---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+**≥3 lỗi cụ thể:** lượt 1 không có câu `pass=0`. Ghi chú nhẹ (không làm fail): B15–B21 dùng lý do “ngoài phạm vi” chung khi escalate thay vì lý do chuyên biệt (Gate/LMS/lỗi hệ thống) — vẫn đúng hành vi chuyển TA, không bịa.
 
 ## 3. Một lần cải tiến
 

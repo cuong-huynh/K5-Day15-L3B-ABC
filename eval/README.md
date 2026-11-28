@@ -40,11 +40,11 @@
 
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
-| 1 | | | | __/__ | | |
+| 1 | run-1@20261128-064545 | openai/gpt-oss-20b (Groq) | workflow A2 + announcements synthetic | 24/24 | 100% | đạt |
 | 2 | | | | __/__ | | |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
 
 ## 6. Lỗi chính
 
-Tóm 2–3 dòng từ `eval/report.md`: nhóm lỗi lớn nhất · đã sửa gì · còn lại gì.
+Lượt 1: không câu trượt. Ghi chú nhẹ: escalate B15–B21 dùng lý do ngoài phạm vi chung (vẫn đúng hành vi, không bịa).

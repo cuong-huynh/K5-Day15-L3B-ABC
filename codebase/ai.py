@@ -44,10 +44,18 @@ load_env()
 MODEL_PROVIDER = (os.environ.get("MODEL_PROVIDER") or "fake").strip().lower()
 MODEL_NAME = (os.environ.get("MODEL_NAME") or "").strip()
 API_KEY = (os.environ.get("API_KEY") or "").strip()
-
+# Tuỳ chọn: ghi đè URL (vd endpoint dedicated FPT). Để trống = dùng URL mặc định theo provider.
+API_BASE = (os.environ.get("API_BASE") or "").strip().rstrip("/")
 
 SHOW_RAW = False   # đổi thành True để in nguyên phản hồi của API khi cần tìm tên trường
-URL_GROQ = "https://api.groq.com/openai/v1/chat/completions"   # Groq dùng định dạng OpenAI
+
+# Provider dạng OpenAI chat/completions
+URLS = {
+    "groq": "https://api.groq.com/openai/v1/chat/completions",
+    "fpt": "https://token-api.fpt.ai/v1/chat/completions",   # FPT AI Factory serverless
+    "openai": "https://api.openai.com/v1/chat/completions",
+    "deepseek": "https://api.deepseek.com/chat/completions",
+}
 
 
 def post_json(url, headers, body, timeout=60):
@@ -65,13 +73,38 @@ def post_json(url, headers, body, timeout=60):
     return data
 
 
-def call_groq(system, user):
+def chat_completions_url():
+    """URL gọi chat: API_BASE (nếu có) hoặc URL mặc định theo MODEL_PROVIDER."""
+    if API_BASE:
+        if API_BASE.endswith("/chat/completions"):
+            return API_BASE
+        return API_BASE + "/chat/completions"
+    if MODEL_PROVIDER in URLS:
+        return URLS[MODEL_PROVIDER]
+    raise NotImplementedError(
+        "chưa có URL cho MODEL_PROVIDER=%s — đặt API_BASE=.../v1 hoặc thêm vào URLS trong ai.py"
+        % MODEL_PROVIDER)
+
+
+def call_openai_compatible(system, user):
+    """Gọi API dạng OpenAI (Groq / FPT / OpenAI / DeepSeek…)."""
+    if not API_KEY:
+        raise RuntimeError("API_KEY trống — điền key vào .env")
+    if not MODEL_NAME:
+        raise RuntimeError("MODEL_NAME trống — điền mã model vào .env")
     messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
-    data = post_json(URL_GROQ, {"Authorization": "Bearer " + API_KEY},
-                     {"model": MODEL_NAME, "messages": messages, "temperature": 0})
-    u = data["usage"]   # token đo thật từ API
-    return {"text": data["choices"][0]["message"]["content"],
-            "tokens_in": u["prompt_tokens"], "tokens_out": u["completion_tokens"]}
+    data = post_json(
+        chat_completions_url(),
+        {"Authorization": "Bearer " + API_KEY},
+        {"model": MODEL_NAME, "messages": messages, "temperature": 0},
+    )
+    u = data.get("usage") or {}
+    text = data["choices"][0]["message"]["content"]
+    return {
+        "text": text,
+        "tokens_in": int(u.get("prompt_tokens") or u.get("input_tokens") or 0),
+        "tokens_out": int(u.get("completion_tokens") or u.get("output_tokens") or 0),
+    }
 
 
 @model_call
@@ -79,8 +112,9 @@ def call_model(system: str, user: str) -> dict:
     if MODEL_PROVIDER == "fake":
         last = (user.strip().splitlines() or [""])[-1]
         return {"text": "[câu trả lời giả — chưa nối model] " + last[:60], "model": "fake", "tokens_in": 0, "tokens_out": 0}
-    if MODEL_PROVIDER == "groq":
-        r = call_groq(system, user)
+
+    if MODEL_PROVIDER in URLS or API_BASE:
+        r = call_openai_compatible(system, user)
         return {"text": r["text"], "model": MODEL_NAME,
                 "tokens_in": int(r["tokens_in"]), "tokens_out": int(r["tokens_out"])}
 

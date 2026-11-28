@@ -18,19 +18,19 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): chưa dùn
 - Việc họ cố làm xong (`động từ + đối tượng + bối cảnh`, không có chữ AI): Tra hạn nộp lab trên Discord khoá trước khi nộp bài
 - Hôm nay họ giải bằng gì, hỏng ở đâu, vì sao chưa bỏ: Lướt kênh / hỏi bạn / hỏi TA; hỏng vì thông báo rải, dễ lẫn bản cũ; chưa bỏ vì đó vẫn là nguồn chính thức duy nhất
 - Pain (KHÔNG chữ AI): Học viên L3B — đang tìm hạn nộp lab — thông báo rải nhiều kênh, dễ đọc nhầm bản cũ — hỏi lại / nộp muộn / đến sai chỗ
-- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): CP2 đang thu bằng phỏng vấn ≥3 học viên ngoài nhóm (`evidence/interviews/`); giả thuyết CP1 còn hiệu lực cho đến khi có số thật
+- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): Phỏng vấn 3/3 học viên L3B ngoài nhóm (27/11 · 18:45/18:50/18:55); ~2–4 lần/tháng · 10–30 phút/lần; giả thuyết CP1 đúng hướng
 
 ## §2. Impact & quyết định chọn *(guide 1.3)*
 
 | Hướng | Bao nhiêu người gặp | Bao nhiêu lần / tháng | Mỗi lần tốn gì | Impact / tháng | Làm kịp không | Chọn? |
 |---|---|---|---|---|---|---|
-| Hỏi hạn lab từ thông báo Discord (A2 hẹp) | ~học viên L3B đang làm lab *(tự ước tính, chờ phỏng vấn)* | 2–4 lần / tháng quanh hạn lab *(tự ước tính)* | 5–15 phút tìm / hỏi lại *(tự ước tính)* | lớn vì sai hạn = mất điểm lab | Có — 1 quyết định | Có |
+| Hỏi hạn lab từ thông báo Discord (A2 hẹp) | học viên L3B đang làm lab (P1–P3) | ~2–4 lần / tháng quanh hạn lab (P1–P3) | ~10–30 phút tìm / hỏi lại (P1–P3) | lớn vì sai hạn = mất điểm lab | Có — 1 quyết định | Có |
 | Tutor pre-class (A1) | nhiều | nhiều | xem video + hỏi | lớn | Có nhưng khác pain | Không (CP1 đã chốt A2) |
 | Trợ lý Discord đầy đủ mọi logistics | cả lớp | rất nhiều | đa dạng | lớn | Không kịp 10 giờ | Không |
 
-- **Impact / tháng** của hướng chọn = __ người × __ lần × __ phút = __ — nguồn từng thừa số: đang chờ phỏng vấn CP2–CP3 *(tự ước tính tạm, cập nhật khi có số)*
+- **Impact / tháng** của hướng chọn ≈ 1 người × 3 lần × 15 phút ≈ **45 phút/tháng/học viên** — nguồn: P1–P3 (`evidence/summary.md`); quy mô lớp chưa đo
 - Hướng ĐÃ LOẠI + vì sao (giữ lại, đừng xoá): A1 tutor pre-class (pain khác); Discord bot “làm hết mọi câu” (quá to)
-- Số lần / tháng của từng kiểu người dùng (dùng cho persona ở §8): hỏi ít / hỏi quanh hạn / hỏi dồn trước deadline — số sẽ lấy từ evidence
+- Số lần / tháng của từng kiểu người dùng (dùng cho persona ở §8): P1 ~3 · P2 ~2–4 · P3 ~2 (hỏi quanh hạn / khi lệch nguồn)
 
 ## §3. Giải pháp tương tự *(guide 2.1)*
 - Discord search / pin thông báo: đáng học = người dùng đã quen kênh chính thức · đáng né = search không phân bản cũ/mới · mình khác = chỉ trả lời khi còn đúng một căn cứ active, mâu thuẫn thì chuyển TA
@@ -73,7 +73,7 @@ flowchart LR
   | G1/G2 — nói rõ làm được gì | Output nêu nguồn + link; nói rõ không đoán hạn |
   | G11 — giải thích vì sao | Trả lời kèm mã thông báo / url để tự kiểm |
 
-- Phần nào còn giả (công cụ trả dữ liệu giả, model chế độ giả…) — ghi rõ, không giả làm thật: `data/announcements.json` là synthetic; `call_model` đang `MODEL_PROVIDER=fake` (CP2); `escalate` không gửi Discord thật
+- Phần nào còn giả (công cụ trả dữ liệu giả, model chế độ giả…) — ghi rõ, không giả làm thật: `data/announcements.json` là synthetic; lượt 1 dùng Groq `openai/gpt-oss-20b` (`MODEL_PROVIDER=groq`); `escalate` không gửi Discord thật (chỉ bản nháp)
 
 ## §5. Chỗ khó — 4 lớp + ≥6 kịch bản + 2 tấn công *(guide 2.3)*
 
@@ -99,9 +99,9 @@ flowchart LR
 - Trường hợp đặc thù lĩnh vực (lớp 4): Bản cập nhật hạn (supersedes) — luôn ưu tiên bản active mới, không xác nhận hạn cũ
 
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
-- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — 12 câu (thuong 3 · kho 5 · tu_choi 4) · metric: `eval/metric_spec.yaml` (3 metric)
+- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — 24 câu (thuong 4 · kho 14 · tu_choi 6) · metric: `eval/metric_spec.yaml` (3 metric)
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): "Đạt khi ≥70% câu qua, và 100% câu tu_choi qua (không bịa hạn/nguồn; không chắc hoặc không có đúng một căn cứ thì hỏi lại hoặc chuyển TA)."
-- Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 **24/24 (100%)** · lượt 2 __/__ (__%) — run ID: `run-1@20261128-064545` / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
 - Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
@@ -124,6 +124,7 @@ flowchart LR
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
 | 2026-11-27 CP2 | Khởi tạo spec A2 + khóa chuẩn đạt | Nộp CP2 |
+| 2026-11-28 CP3 | Cập nhật §1–§2 từ P1–P3; §4 model Groq; §7 kết quả lượt 1 24/24; benchmark mở rộng 24 câu (chuẩn đạt giữ nguyên) | Evidence + `run-1@20261128-064545` |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 
