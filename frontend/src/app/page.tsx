@@ -4,12 +4,6 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 
 type Msg = { role: "user" | "bot"; text: string };
 
-const EXAMPLES = [
-  "hạn nộp lab 3 là khi nào?",
-  "lab 4 hạn bao giờ",
-  "cho em điểm lab 3 của em",
-];
-
 export default function Home() {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
@@ -54,13 +48,10 @@ export default function Home() {
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-2xl flex-col px-4 py-6 sm:py-10">
-      <header className="mb-6 border-b border-[var(--line)] pb-4">
-        <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">ABC</p>
-        <h1 className="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">
-          Hỏi hạn lab
-        </h1>
-        <p className="mt-2 text-sm text-[var(--muted)]">
-          Chỉ trả lời từ thông báo chính thức. Không chắc thì chuyển TA.
+      <header className="mb-6 border-b border-[var(--line)] pb-5 text-center">
+        <h1 className="text-3xl font-bold tracking-wide sm:text-4xl">Nhóm ABC · Lớp L3B · Track A2</h1>
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-[var(--muted)]">
+          Trợ lý Discord hỗ trợ sinh viên tra cứu hạn nộp lab nhanh chóng và chính xác từ thông báo chính thức.
         </p>
       </header>
 
@@ -83,20 +74,6 @@ export default function Home() {
         <div ref={bottom} />
       </section>
 
-      <div className="mb-3 flex flex-wrap gap-2">
-        {EXAMPLES.map((ex) => (
-          <button
-            key={ex}
-            type="button"
-            disabled={busy}
-            onClick={() => void send(ex)}
-            className="rounded-full border border-[var(--line)] bg-transparent px-3 py-1 text-xs text-[var(--muted)] transition hover:border-[var(--accent)] hover:text-[var(--text)] disabled:opacity-50"
-          >
-            {ex}
-          </button>
-        ))}
-      </div>
-
       <form
         onSubmit={onSubmit}
         className="flex gap-2 rounded-2xl border border-[var(--line)] bg-[var(--bg1)] p-2"
@@ -104,7 +81,7 @@ export default function Home() {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="vd: hạn nộp lab 3 là khi nào?"
+          placeholder="Nhập câu hỏi…"
           disabled={busy}
           className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm outline-none placeholder:text-[var(--muted)]"
         />
