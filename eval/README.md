@@ -41,10 +41,10 @@
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
 | 1 | run-1@20261128-064545 | openai/gpt-oss-20b (Groq) | Workflow cố định 1 lần gọi model phân loại ý định + dựng câu trả lời từ data/announcements.json (commit 7f3e187) | 24/24 | 100% | Đạt |
-| 2 | | | | __/__ | | |
+| 2 | run-2@20261128-132500 | DeepSeek-V4.1-Flash (FPT) | Cải tiến: `out_of_scope_reason()` — lý do escalate cụ thể B15–B21 (Gate/LMS/Phoenix/nộp nhầm…) | 24/24 | 100% | Đạt |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
 
 ## 6. Lỗi chính
 
-Lượt 1: không câu trượt. Ghi chú nhẹ: escalate B15–B21 dùng lý do ngoài phạm vi chung (vẫn đúng hành vi, không bịa).
+Lượt 1: không câu `pass=0`; soft-fail B15–B21 lý do escalate chung. Lượt 2: đã sửa lý do cụ thể; vẫn 24/24. Chi tiết `eval/report.md`.

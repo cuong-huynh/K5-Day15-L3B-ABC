@@ -1,38 +1,39 @@
 # Chi phí khi dùng thật
 
-> Điền ở guide bước 4.2, nộp ở CP4 14:30 Thứ Bảy 28/11. Ôn lại: ngày 13, ngày 1, ngày 14 · lab ngày 13, lab ngày 14. Chấm ở rubric R6.
-> Số **không điền tay**: điền `cost/personas.yaml` → `python run.py simulate` → chép bảng trong `cost/simulate-N-summary.md` vào đây.
-> Lúc build dùng gói miễn phí vẫn tính theo **giá gói trả phí** — đây là chi phí cho lúc đưa vào dùng thật.
+> Điền ở guide bước 4.2, nộp ở CP4 14:30 Thứ Bảy 28/11.
 
 ## 1. Đầu vào
 
-- **Persona** (`cost/personas.yaml`): ≥3 kiểu — tỉ lệ, số phiên / người / tháng, số lượt hỏi / phiên. Nguồn: __
-- **Số người dùng thật** 3 kịch bản: thấp __ · cơ sở __ · cao __. Nguồn: __
-- **Giá** ≥2 mức model (từ `further-reading/model-prices.md` của repo đề, có link + ngày xem): __ · __
-- **Tỉ lệ đạt** dùng để tính: __/__ (__%) — lượt `run-__` (lượt 2)
-- Đo token trên model __, tính giá model __ và __
+- **Persona** (`cost/personas.yaml`): dung_it 40% · dung_vua 40% · dung_nhieu 20% — số lần/tháng từ P1–P3 (`evidence/interviews/`).
+- **Số người dùng thật** 3 kịch bản: thấp **300** · cơ sở **700** · cao **1000**. Nguồn: track A — lớp L3 >700 (README hackathon); thấp/cao *(tự ước tính)*.
+- **Giá** ≥2 mức: `deepseek-flash` 0.15/0.60 $/1M · `gemini-3.1-flash-lite` 0.25/1.50 $/1M (brief `model-prices.md` 25/11/2026).
+- **Tỉ lệ đạt** dùng để tính: **24/24 (100%)** — lượt `run-2@20261128-132500`. Guide khuyên không “coi như 100%” mù quáng → thêm **độ nhạy** 90% / 80% ở mục 2b.
+- Đo token trên model **DeepSeek-V4.1-Flash** (FPT); tính giá theo `deepseek-flash` và `gemini-3.1-flash-lite`.
 
 ## 2. Kết quả mô phỏng
 
-Lượt mô phỏng: `cost/simulate-__.csv` · run ID __ · __ phiên · seed __
+Lượt mô phỏng: `cost/simulate-1.csv` · run ID `simulate-1@20261128-132714` · **50** phiên · seed **42**  
+Tóm tắt: `cost/simulate-1-summary.md`
 
-*(dán bảng từ `cost/simulate-N-summary.md`)*
+| Model (giá) | Chi phí / phiên | Chi phí / task thành công | / tháng — thấp (300) | / tháng — cơ sở (700) | / tháng — cao (1000) | / người / tháng (cơ sở) |
+|---|---:|---:|---:|---:|---:|---:|
+| deepseek-flash | $0.00030 | $0.00030 | $0.29 | $0.68 | $0.97 | $0.00097 (~24₫) |
+| gemini-3.1-flash-lite | $0.00066 | $0.00066 | $0.64 | $1.50 | $2.14 | $0.0021 (~54₫) |
 
-| Model | Chi phí / phiên | Chi phí / task thành công | / tháng — thấp | / tháng — cơ sở | / tháng — cao | / người / tháng (cơ sở) |
-|---|---|---|---|---|---|---|
-| | | | | | | |
-| | | | | | | |
+**Kịch bản cơ sở (nộp form):** chi phí / task thành công ≈ **$0.00030** trên giá `deepseek-flash` (đo token DeepSeek-V4.1-Flash).
 
-Chi phí / task thành công = chi phí trung bình mỗi phiên ÷ tỉ lệ đạt — **không coi như đạt 100%**.
+### 2b. Độ nhạy tỉ lệ đạt (vì lượt 2 = 100%)
+
+Chi phí / task = chi phí/phiên ÷ tỉ lệ. Với deepseek-flash ($0.00030/phiên):
+
+| Tỉ lệ giả định | Chi phí / task thành công |
+|---|---:|
+| 100% (đo run-2) | $0.00030 |
+| 90% | $0.00033 |
+| 80% | $0.00038 |
 
 ## 3. So với impact
 
-- Impact / người / tháng (`spec.md` §2): __
-- Chi phí / người / tháng (cơ sở, model __): __
-- **Kết luận một dòng — đáng làm không:** __
-
-## 4. *(Muốn sâu hơn, không bắt buộc)*
-
-- Bảng độ nhạy: model rẻ hơn · cache · cắt ngữ cảnh · giới hạn bước — mỗi cần gạt đổi chi phí bao nhiêu
-- Chi phí ngoài model: hosting, lưu trữ, giờ công người duyệt
-- Quy mô nào thì bài toán còn đáng làm
+- Impact / người / tháng (`spec.md` §2): ≈ **45 phút** tìm/hỏi lại hạn (1×3 lần×15 phút từ P1–P3).
+- Chi phí model / người / tháng (cơ sở): ~**24–54₫** — rất nhỏ so với thời gian tiết kiệm.
+- **Kết luận:** **đáng làm (go / iterate)** ở quy mô lớp — chi phí API không phải nút thắt; nút thắt là chất lượng căn cứ thông báo + handoff TA.

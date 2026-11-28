@@ -9,7 +9,7 @@
 | Lượt | Run ID | Đạt / tổng | % | thuong | kho | tu_choi | So với chuẩn "đạt" |
 |---|---|---|---|---|---|---|---|
 | 1 | run-1@20261128-064545 | 24/24 | 100% | 4/4 | 14/14 | 6/6 | đạt |
-| 2 | | __/__ | | __/__ | __/__ | __/__ | đạt / chưa |
+| 2 | run-2@20261128-132500 | 24/24 | 100% | 4/4 | 14/14 | 6/6 | đạt |
 
 Kết quả từng câu: `eval/run-1.csv`, `eval/run-2.csv`. Trace: `traces/run-1.jsonl`, `traces/run-2.jsonl`.
 
@@ -17,18 +17,25 @@ Kết quả từng câu: `eval/run-1.csv`, `eval/run-2.csv`. Trace: `traces/run-
 
 | Nhóm lỗi | Số câu | Câu |
 |---|---|---|
-| *(lượt 1 không có câu trượt)* | 0 | — |
+| *(lượt 1 không có câu `pass=0`)* | 0 | — |
+| Soft-fail: lý do escalate quá chung | 7 | B15–B21 |
 
-**≥3 lỗi cụ thể:** lượt 1 không có câu `pass=0`. Ghi chú nhẹ (không làm fail): B15–B21 dùng lý do “ngoài phạm vi” chung khi escalate thay vì lý do chuyên biệt (Gate/LMS/lỗi hệ thống) — vẫn đúng hành vi chuyển TA, không bịa.
+**≥3 lỗi cụ thể (soft — vẫn `pass=1` nhưng kém trải nghiệm TA):**
+
+| Câu | Input (rút) | Output (vấn đề) | Vì sao sai / kém |
+|---|---|---|---|
+| B15 | Cách tính hạn Gate 1… | Chuyển TA với lý do “điểm / điểm danh / việc khác” | Nhầm loại việc; TA không biết là quy định Gate |
+| B16 | nộp trên lms là nộp ở đâu | Cùng lý do chung | Không nêu LMS |
+| B20 | nộp Gate 2 Phoenix thất bại | Cùng lý do chung | Không nêu lỗi hệ thống Phoenix |
 
 ## 3. Một lần cải tiến
 
-- Nhắm vào nhóm lỗi: __ — vì sao là nhóm **đau nhất với người dùng**: __
-- Đã sửa gì (có thể vài thay đổi cùng nhắm nhóm lỗi đó): __
-- Kết quả: nhóm lỗi đó __/__ → __/__ · tổng __% → __%
-- Câu nào **tệ đi** sau khi sửa: __
+- Nhắm vào nhóm lỗi: **lý do chuyển TA quá chung (B15–B21)** — vì sao đau với người dùng: học viên/TA đọc bản nháp không biết việc cần xử lý gì; dễ hiểu nhầm bot “lười” hoặc lẫn điểm số.
+- Đã sửa gì: thêm `out_of_scope_reason()` trong `codebase/agent.py` — phân loại lý do Gate / LMS / Phoenix / nộp nhầm / lỗi refresh / điểm / điểm danh trước khi `escalate`.
+- Kết quả: soft-fail B15–B21 có lý do cụ thể trong output · tổng **24/24 → 24/24** (100% → 100%) · vẫn đạt chuẩn §7.
+- Câu nào **tệ đi** sau khi sửa: không có (cùng bộ câu thử, không câu `pass=0` mới).
 
 ## 4. Còn lại
 
-- Lỗi chưa sửa + nguy hiểm thế nào: __
-- Nếu có thêm 1 tuần: __
+- Lỗi chưa sửa + nguy hiểm: model `classify` vẫn có thể gắn `ngoai_pham_vi` rộng; lý do code đã bù. Nguy hiểm chính vẫn là bịa hạn — đã chặn bằng dựng hạn từ data.
+- Nếu có thêm 1 tuần: held-out set · làm rõ hơn handoff Discord thật (sau duyệt) · đo A/B lý do escalate với TA.
