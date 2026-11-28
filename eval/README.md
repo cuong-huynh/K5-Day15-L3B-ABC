@@ -40,7 +40,7 @@
 
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
-| 1 | run-1@20261128-064545 | openai/gpt-oss-20b (Groq) | workflow A2 + announcements synthetic | 24/24 | 100% | đạt |
+| 1 | run-1@20261128-064545 | openai/gpt-oss-20b (Groq) | Workflow cố định 1 lần gọi model phân loại ý định + dựng câu trả lời từ data/announcements.json (commit 7f3e187) | 24/24 | 100% | Đạt |
 | 2 | | | | __/__ | | |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
