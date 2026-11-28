@@ -6,11 +6,12 @@ README của nhóm có mục "Dùng AI vào việc gì" (2–3 dòng, bắt bu�
 
 | Việc | Công cụ AI | AI làm gì | Người kiểm/sửa gì | Ai phụ trách |
 |---|---|---|---|---|
-| Code bản chạy thử | | | | |
-| Prompt / thiết kế lời gọi mô hình | | | | |
+| Code bản chạy thử | Claude Code (Claude Sonnet 5.5) | Viết `codebase/tools.py` (`search_announcements`, `escalate`), `agent.py` (workflow cố định), nhánh gọi Groq trong `ai.py`, script `eval/stress/run_stress.py` | Duy chạy `python run.py`, `eval --try`, `eval` (lượt 1); đọc output từng ca; sửa lỗi sau khi chạy bộ 50 câu (mã lab viết chữ, nhiều lab trong một câu, xin gia hạn, lỗi LMS); bỏ lần gọi model thứ hai để giảm token (~520 → ~290 token vào mỗi câu) | Duy |
+| Prompt / thiết kế lời gọi mô hình | Claude Code (Claude Sonnet 5.5) · model chạy thật: `openai/gpt-oss-20b` (Groq) | Soạn prompt phân loại ý định (`CLASSIFY_SYSTEM` trong `agent.py`); đề xuất code kiểm lại đầu ra model (mã lab phải có trong câu hỏi, hạn + link lấy thẳng từ dữ liệu, regex chặn lệnh chèn làm lớp dự phòng) | Duy quyết định giữ một lần gọi model; kiểm bằng 24 câu benchmark (không đổi hành vi so với `run-1`) và 50 câu stress | Duy |
 | Đào data (viết script đếm, gợi ý nhãn) | | | Kiểm tay __ dòng, khớp __ | |
 | Rà câu hỏi phỏng vấn / khảo sát | | Chỉ rà câu dẫn dắt | | |
 | Viết câu thử (benchmark) | | | Mỗi câu thử có `source`; câu thử AI viết được ghi rõ | |
+| Bộ câu kiểm tải phụ `eval/stress/cases_50.json` (không thuộc `benchmark.csv`) | LLM khác (do Duy chạy prompt `eval/stress/gen_prompt.md`) | Sinh 50 câu thử + nhãn hành vi mong đợi | Nhãn do LLM sinh, chưa kiểm tay toàn bộ: đã xem tay các câu lệch (S36, S38 là nhãn chưa chuẩn / lỗi phát hiện, không phải lỗi bịa hạn) | Duy |
 | Sinh data `synthetic` (nếu có) | | | Seed __ · kiểm tay __ dòng | |
 | Chấm cột `pass` bằng LLM (nếu có) | | | Kiểm tra thủ công __ câu thử, khớp __/__ | |
 | Slide, văn bản | | | | |
