@@ -1,7 +1,7 @@
 # Dàn slide → lấy số từ file nào
 
 > Làm ở guide bước 5.1. Luật: **không có bằng chứng thì không có slide** — mỗi trang ≥1 con số / trích dẫn có nguồn / kết quả đo.
-> Xuất PDF thành `demo-slides.pdf` ở thư mục gốc repo, nộp tại CP4 14:30 Thứ Bảy 28/11. Nộp PDF, không nộp link.
+> Bản HTML xem thử: `slides/index.html` (local, **không commit**). PDF nộp: `demo-slides.pdf` ở **thư mục gốc** repo. Nộp PDF, không nộp link.
 
 | # | Trang | Có gì | Số lấy từ | Xong |
 |---|---|---|---|---|
