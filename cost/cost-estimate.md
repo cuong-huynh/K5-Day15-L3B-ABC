@@ -13,45 +13,49 @@
   - Trung bình trọng số: `2,8` phiên/người/tháng (khớp ước lượng ~3 lần/tháng ở `spec.md` §2).
 - **Số người dùng thật** 3 kịch bản: thấp `300` *(tự ước tính)* · cơ sở `700` (README hackathon AI20K: lớp L3 > 700 học viên) · cao `1.000` *(tự ước tính)*.
 - **Giá** 3 mức model (USD / 1M token):
-  - `openai/gpt-oss-20b` (Groq): vào `$0.075` · ra `$0.30` — nguồn `https://groq.com/pricing` · xem 28/11/2026 (model chạy thật).
+  - `openai/gpt-oss-20b` (Groq): vào `$0.075` · ra `$0.30` — nguồn `https://groq.com/pricing` · xem 28/11/2026 (model chạy thật ở `eval/run-1.csv`).
   - `openai/gpt-oss-120b` (Groq): vào `$0.15` · ra `$0.60` — nguồn `https://groq.com/pricing` · xem 28/11/2026.
-  - `gemini-4-hydrogen` (Google): vào `$1.50` · ra `$7.50` — nguồn `https://ai.google.dev/gemini-api/docs/pricing` · theo bảng giá repo đề 25/11/2026.
+  - `gemini-3.5-flash` (Google): vào `$1.50` · ra `$9.00` — nguồn `https://ai.google.dev/gemini-api/docs/pricing` · xem 28/11/2026 (model đo token mô phỏng).
   - Tỷ giá quy đổi: `1 USD = 26.030 ₫` (Vietcombank tỷ giá bán ra · xem 28/11/2026).
-- **Tỉ lệ đạt** dùng để tính: *(chờ chạy & chấm lượt 2 `eval/run-2.csv`; lượt 1 hiện là `24/24 = 100%` — `run-1@20261128-064545`)*
-- Đo token trên model `openai/gpt-oss-20b` (Groq), tính giá cho `openai/gpt-oss-20b`, `openai/gpt-oss-120b` và `gemini-4-hydrogen` *(lưu ý: khác bộ tách token giữa các hãng nên số token thực tế trên Gemini có thể lệch)*.
+- **Tỉ lệ đạt** dùng để tính: `24/24 (100%)` — lượt `eval/run-1.csv` (`run-1@20261128-064545`, truyền qua `--rate-from eval/run-1.csv`; kèm bảng độ nhạy 90% và 80% ở mục 4).
+- Đo token trên model `gemini-3.5-flash`, tính giá cho `openai/gpt-oss-20b`, `openai/gpt-oss-120b` và `gemini-3.5-flash` *(lưu ý: lượt eval `run-1` chạy bằng `openai/gpt-oss-20b` khác model đo token, và khác bộ tách token giữa các hãng nên số token thực tế trên Groq có thể lệch nhẹ; xem `eval/run-1.csv`: trung bình ~295 token vào / ~115 token ra mỗi câu trên Groq so với ~278 token vào / ~16–18 token ra mỗi câu trên `gemini-3.5-flash`)*.
 
 ## 2. Kết quả mô phỏng
 
-> **Chờ chạy lệnh thật (cần `.env` có API key Groq):**
-> `python3 run.py simulate --try` → `python3 run.py simulate --rate-from eval/run-2.csv` (hoặc `eval/run-1.csv` nếu chưa có lượt 2), rồi dán nguyên bảng từ `cost/simulate-1-summary.md` vào dưới đây.
+Lượt mô phỏng: `cost/simulate-1.csv` (`cost/simulate-1-summary.md`, `traces/simulate-1.jsonl`) · run ID `simulate-1@20261128-132804` · `50` phiên · seed `42`
 
-Lượt mô phỏng: `cost/simulate-__.csv` · run ID `__` · `50` phiên · seed `42`
-
-*(dán bảng từ `cost/simulate-1-summary.md` sau khi chạy)*
-
-| Model | Chi phí / phiên | Chi phí / task thành công | / tháng — thấp (300) | / tháng — cơ sở (700) | / tháng — cao (1.000) | / người / tháng (cơ sở) |
+| Persona | Số phiên mô phỏng thành công | Lượt hỏi / phiên | Token vào / phiên | Token ra / phiên | Gọi model / phiên | Gọi công cụ / phiên |
 |---|---:|---:|---:|---:|---:|---:|
-| `openai/gpt-oss-20b` | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* |
-| `openai/gpt-oss-120b` | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* |
-| `gemini-4-hydrogen` | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* |
+| `dung_it` | 4 | 1 | 278 | 16 | 1.0 | 1.2 |
+| `dung_vua` | 4 | 2 | 557 | 35 | 2.0 | 2.0 |
+| `dung_nhieu` | 0 | 3 | — | — | — | — |
 
-Chi phí / task thành công = chi phí trung bình mỗi phiên ÷ tỉ lệ đạt — **không coi như đạt 100%** (xem bảng độ nhạy 90% / 80% ở mục 4 nếu lượt 2 đạt 100%).
+| Model (giá) | Chi phí / phiên | Chi phí / task thành công | Chi phí / câu hỏi đạt | / tháng — thấp (300) | / tháng — cơ sở (700) | / tháng — cao (1.000) | / người / tháng (cơ sở) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `openai/gpt-oss-20b` (vào 0.075 · ra 0.3 $/1M) | $0.000039 (≈ 1 ₫) | $0.000039 (≈ 1 ₫) | $0.000026 (≈ 1 ₫) | $0.0342 (≈ 891 ₫) | $0.0799 (≈ 2.080 ₫) | $0.1142 (≈ 2.972 ₫) | $0.00011 (≈ 3 ₫) |
+| `openai/gpt-oss-120b` (vào 0.15 · ra 0.6 $/1M) | $0.000078 (≈ 2 ₫) | $0.000078 (≈ 2 ₫) | $0.000052 (≈ 1 ₫) | $0.0685 (≈ 1.783 ₫) | $0.1598 (≈ 4.160 ₫) | $0.2283 (≈ 5.943 ₫) | $0.00023 (≈ 6 ₫) |
+| `gemini-3.5-flash` (vào 1.5 · ra 9.0 $/1M) | $0.00085 (≈ 22 ₫) | $0.00085 (≈ 22 ₫) | $0.00057 (≈ 15 ₫) | $0.7520 (≈ 19.574 ₫) | $1.75 (≈ 45.674 ₫) | $2.51 (≈ 65.248 ₫) | $0.0025 (≈ 65 ₫) |
+
+- **Ghi chú trung thực về lượt `simulate-1`:** có `42/50` phiên lỗi (rớt DNS/mạng tạm thời ở `S003`–`S012` và chạm hạn mức miễn phí `HTTP 429` của Google AI Studio từ `S014`/`S022`), nên chỉ có `8/50` phiên không lỗi được tính vào trung bình (`dung_it`: 4, `dung_vua`: 4; `dung_nhieu`: 0 nên khung tự lấy chi phí trung bình chung cho persona này). Nếu chạy lại bằng tài khoản trả phí hoặc key Groq (trùng model `eval/run-2.csv`), nhóm sẽ lưu thành `cost/simulate-2.csv` (không ghi đè `simulate-1`).
+- Chi phí / task thành công = chi phí trung bình mỗi phiên ÷ tỉ lệ đạt — **không coi như đạt 100%** (xem bảng độ nhạy 90% / 80% ở mục 4).
 
 ## 3. So với impact
 
-- Impact / người / tháng (`spec.md` §2): ≈ **45 phút/tháng/học viên** (~3 lần/tháng × 15 phút tìm & đối chiếu hạn, tránh rủi ro nộp muộn mất điểm lab — nguồn P1–P3).
-- Chi phí / người / tháng (cơ sở, model `openai/gpt-oss-20b`): *(điền sau khi có `cost/simulate-1-summary.md`)*
-- **Kết luận một dòng — đáng làm không:** *(chốt sau khi có số từ `simulate-1-summary.md` — so trực tiếp chi phí/người/tháng với 45 phút tiết kiệm + giảm rủi ro sai hạn)*
+- Impact / người / tháng (`spec.md` §2): ≈ **45 phút/tháng/học viên** (~3 lần/tháng × 15 phút tìm & đối chiếu hạn, đồng thời tránh rủi ro nộp muộn mất điểm lab — nguồn P1–P3).
+- Chi phí / người / tháng (cơ sở 700 học viên):
+  - Với `openai/gpt-oss-20b`: **$0.00011 (≈ 3 ₫/người/tháng)** — tổng cả lớp 700 người ≈ **$0.0799 (≈ 2.080 ₫/tháng)**.
+  - Với `gemini-3.5-flash` (mức đắt nhất trong 3 model): **$0.0025 (≈ 65 ₫/người/tháng)** — tổng cả lớp 700 người ≈ **$1.75 (≈ 45.674 ₫/tháng)**.
+- **Kết luận một dòng — đáng làm không:** **Rất đáng làm** — chi phí model chỉ khoảng **3 ₫ đến 65 ₫ / học viên / tháng** (dưới 50.000 ₫/tháng cho cả lớp 700 người ngay cả ở model mạnh), quá nhỏ so với ~45 phút tiết kiệm/người/tháng và rủi ro nộp muộn mất điểm lab; chi phí thực tế cần để ý không phải token mà là công TA duyệt ca `escalate` và vận hành bot.
 
 ## 4. Độ nhạy & chi phí ngoài model
 
-- **Độ nhạy theo tỉ lệ đạt (nếu lượt 2 đạt 100% trên tập benchmark 24 câu):**
+- **Độ nhạy theo tỉ lệ đạt** *(vì `eval/run-1.csv` đạt 100%, kiểm tra khi tỉ lệ đạt thực tế giảm xuống 90% và 80%)*:
 
-| Kịch bản tỉ lệ đạt | Chi phí / task thành công (`openai/gpt-oss-20b`) | Chi phí / task thành công (`openai/gpt-oss-120b`) | Chi phí / task thành công (`gemini-4-hydrogen`) | Ghi chú |
+| Kịch bản tỉ lệ đạt | Chi phí / task thành công (`openai/gpt-oss-20b`) | Chi phí / task thành công (`openai/gpt-oss-120b`) | Chi phí / task thành công (`gemini-3.5-flash`) | Ghi chú |
 |---|---:|---:|---:|---|
-| Thực đo (`run-2`, vd 100%) | *(chờ simulate)* | *(chờ simulate)* | *(chờ simulate)* | Lấy trực tiếp từ `simulate-1-summary.md` |
-| Giả định 90% *(độ nhạy)* | `chi_phi_phien ÷ 0.90` | `chi_phi_phien ÷ 0.90` | `chi_phi_phien ÷ 0.90` | Dự phòng câu ngoài phân bố thực tế |
-| Giả định 80% *(độ nhạy)* | `chi_phi_phien ÷ 0.80` | `chi_phi_phien ÷ 0.80` | `chi_phi_phien ÷ 0.80` | Kịch bản bảo thủ sát ngưỡng chuẩn đạt (≥70%) |
+| Thực đo `run-1` (100%) | $0.000039 (≈ 1 ₫) | $0.000078 (≈ 2 ₫) | $0.00085 (≈ 22 ₫) | Lấy trực tiếp từ `cost/simulate-1-summary.md` |
+| Giả định 90% *(độ nhạy)* | $0.000043 (≈ 1 ₫) | $0.000086 (≈ 2 ₫) | $0.00095 (≈ 25 ₫) | `chi_phi_phien ÷ 0.90` — dự phòng câu ngoài phân bố |
+| Giả định 80% *(độ nhạy)* | $0.000049 (≈ 1 ₫) | $0.000097 (≈ 3 ₫) | $0.0011 (≈ 28 ₫) | `chi_phi_phien ÷ 0.80` — kịch bản bảo thủ sát chuẩn đạt (≥70%) |
 
-- **Chi phí ngoài model:** chưa tính vào bảng trên — khi đưa vào dùng thật cần cộng thêm hosting bot Discord / API nhỏ và thời gian TA duyệt các ca `escalate` (bản nháp chờ duyệt).
-- **Cần gạt tối ưu đã áp dụng / có thể thêm:** workflow hiện đã cắt từ 2 lần gọi xuống 1 lần gọi model (~290 token vào/câu ở `run-1`) vì dựng câu trả lời trực tiếp từ JSON thông báo; nếu dùng thật có thể thêm cache theo mã lab để giảm tiếp số lần gọi model.
+- **Chi phí ngoài model:** chưa tính vào bảng trên — khi đưa vào dùng thật cần cộng thêm hosting bot Discord / API nhỏ (~5–10 USD/tháng) và thời gian TA duyệt các ca `escalate` (bản nháp chờ duyệt).
+- **Cần gạt tối ưu đã áp dụng / có thể thêm:** workflow đã cắt từ 2 lần gọi xuống 1 lần gọi model (~280–300 token vào/câu) vì dựng câu trả lời trực tiếp từ JSON thông báo; nếu dùng thật có thể thêm cache theo mã lab để giảm tiếp số lần gọi model.

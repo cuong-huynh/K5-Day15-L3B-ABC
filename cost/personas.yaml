@@ -40,10 +40,10 @@ prices:             # USD / 1 triệu token — ≥2 mức model (rẻ đang ch�
     input: 0.15
     output: 0.60
     source: "https://groq.com/pricing · xem 28/11/2026 (model mạnh hơn cùng nhà cung cấp Groq)"
-  - model: gemini-4-hydrogen
+  - model: gemini-3.5-flash
     input: 1.50
-    output: 7.50
-    source: "https://ai.google.dev/gemini-api/docs/pricing · theo bảng giá repo đề 25/11/2026 (mốc model mạnh tier cao)"
+    output: 9.00
+    source: "https://ai.google.dev/gemini-api/docs/pricing · xem 28/11/2026 (model mạnh, dùng đo token mô phỏng)"
 
 usd_to_vnd:
   rate: 26030
